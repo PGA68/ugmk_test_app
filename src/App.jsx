@@ -12,25 +12,26 @@ import {
 // import Root, { rootLoader } from "./routes/root";
 // import Team, { teamLoader } from "./routes/team"
 
-const router = createBrowserRouter([{
+const schemrouter = createBrowserRouter([{
   path: "/",
   element: <Main />,
-  children: [
-    {
-      path: "pie/:id",
-      element: <Pie />
-    }
-  ]
-}])
+  // loader: async (nope2) => { console.log("nope2 = ", nope2); return nope2 },
+}, {
+  path: "/detail/:FactoryID?/:MonthNumber?",
+  element: <Pie />,
+  loader: async ({ params: a }) => {
+    console.log(a);
+    return a
+  }
+}
+]
+)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <p className="read-the-docs">
       Error top messages
     </p>
-
-    <Main />
-
-    <Spin />
+    <RouterProvider router={schemrouter} />
   </React.StrictMode>
 )
