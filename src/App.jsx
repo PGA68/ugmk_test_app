@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ReactDOM from 'react-dom/client'
 import Main from './pages/Main.jsx'
 import Pie from './pages/Pie.jsx'
@@ -23,9 +23,8 @@ const schemrouter = createBrowserRouter([{
     console.log(a);
     return a
   }
-}
-]
-)
+}])
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
