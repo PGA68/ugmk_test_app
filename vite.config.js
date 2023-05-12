@@ -15,7 +15,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@lib': path.resolve(__dirname, './src/lib'),
-      '@pub': path.resolve(__dirname, './public')
+      '@pub': path.resolve(__dirname, './public'),
+      '@cmp': path.resolve(__dirname, './src/components')
     }
   },
   server: {
