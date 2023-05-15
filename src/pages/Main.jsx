@@ -11,17 +11,15 @@ import { reducer } from '@lib/reducer'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 function Main() {
-  const [filterCase, setFilterCase] = useState()
-  const [baseDate, setBaseDate] = useState()
   const [dataChart0, setDataChart0] = useState(mockData1)
-  const [dataChart, setDataChart] = useState(mockData2)
+  // const [dataChart, setDataChart] = useState(mockData2)
   const metaEnv = import.meta.env
   const currentMode = metaEnv.MODE
 
-  const [state, dispatch] = useReducer(reducer, { filterValue: 'all' })
+  const [state, dispatch] = useReducer(reducer, { dataChart: mockData2, currentOption: localStorage.getItem("filterValue") || 'setAllFactory' })
 
   useEffectOnce(() => {
-    normalizeDB().then(result => setDataChart(result))
+    normalizeDB().then(result => dispatch({ type: 'setNDB', nDB: result }))//setDataChart(result))
     console.log('import.meta.env = ', metaEnv)
     console.log('MY EFFECTONCE IS RUNNING');
     return () => console.log('MY EFFECTONCE IS DESTROYING');
@@ -29,8 +27,8 @@ function Main() {
 
   return (
     <>
-      <Filter art={'aster'} qwer={'defe'} {...{dispatch}} />
-      <h1>Bare Chart</h1>
+      <Filter {...{ dispatch }} activeValue={state.currentOption} />
+      <h1>Bare Chart {state.e}</h1>
       <div className="card" style={{ width: '800px', height: '700px' }}>
 
         <ResponsiveContainer width="100%" height="100%">
@@ -66,7 +64,7 @@ function Main() {
             <BarChart
               width={800}
               height={500}
-              data={dataChart}
+              data={state.dataChart}
               margin={{
                 top: 5,
                 right: 30,

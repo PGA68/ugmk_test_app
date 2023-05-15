@@ -1,27 +1,24 @@
-import { lazy, memo, useState } from 'react'
+import { lazy, memo, useEffect, useState } from 'react'
 import { Select, Space } from 'antd'
 import LocaleProvider from 'antd/es/locale'
 
-const Filter = memo(({ art, qwer, dispatch }) => {
+const Filter = memo(({ dispatch, activeValue }) => {
 
-  const [filterValueActive, setFilterValue] = useState(localStorage.getItem("filterValue") || 'setAllFactory')
-  const [a, setA] = useState(art)
+  // const [filterValueActive, setFilterValue] = useState(localStorage.getItem("filterValue") || 'setAllFactory')
+
   const handleChange = filterValue => {
     localStorage.setItem("filterValue", filterValue)
-    setFilterValue(filterValue)
+    // setFilterValue(filterValue)
     dispatch({ type: filterValue })
   }
 
-
-  setTimeout(() => setA('down'), 5000)
-
   return (
     <Space wrap direction="horizontal" style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-      {/* <h4>{a}</h4> */}
+      {/* <h4>{activeValue}</h4> */}
       <label>
-        Агрегация данных: {`${a} - - - `}
+        Агрегация данных:
         <Select
-          defaultValue={filterValueActive}
+          defaultValue={activeValue}
           style={{ width: 180, marginLeft: 'auto' }}
           onChange={handleChange}
           options={[

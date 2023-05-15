@@ -16,7 +16,7 @@ export async function normalizeDB() {
     const date2hash = date => Number(`${date.getFullYear()}${date.getMonth() + 11}${date.getDate() + 10}`)
     let acc
 
-    return await fetchAPI(import.meta.env.VITE_API_HOST, { headers: { "Content-Type": "application/json" } })
+    return await fetchAPI(import.meta.env.VITE_API_HOST, { headers: { "Content-Type": "application/json", "cache": "force-cache" } })
         .then(({ status, statusText, jsonData }) => {
             console.log('Status = %s \tStatusText = %s \nJsonData = %o', status, statusText, jsonData)
             acc = jsonData.reduce(
