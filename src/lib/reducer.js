@@ -3,40 +3,40 @@
 export const reducer = (state, action) => {
     console.log('Reducer --->\nstate = %o\naction = %o', state, action)
     return ({
-        'setAllFactory': () => {
+        'setAllProducts': () => {
             console.log(action)
             console.log(state)
             return {
                 ...state,
                 currentOption: action.type,
-                dataChart: fix(action)
+                dataChart: rechartData(action.type, state.normalizeDB)
             }
         },
-        'setFactory_1': () => {
+        'setProduct_1': () => {
             console.log(action)
             console.log(state)
             return {
                 ...state,
                 currentOption: action.type,
-                dataChart: fix(action)
+                dataChart: rechartData(action.type, state.normalizeDB)
             }
         },
-        'setFactory_2': () => {
+        'setProduct_2': () => {
             console.log(action)
             console.log(state)
             return {
                 ...state,
                 currentOption: action.type,
-                dataChart: fix(action)
+                dataChart: rechartData(action.type, state.normalizeDB)
             }
         },
-        'setFactory_3': () => {
+        'setProduct_3': () => {
             console.log(action)
             console.log(state)
             return {
                 ...state,
                 currentOption: action.type,
-                dataChart: fix(action)
+                dataChart: rechartData(action.type, state.normalizeDB)
             }
         },
         'setNDB': () => {
@@ -51,8 +51,39 @@ export const reducer = (state, action) => {
     })[action.type]()
 }
 
-const fix = (act) => console.log('RUN FIX = ', act)
-
 const rechartData = (actionName, nDB) => {
-    return []
+
+    const resultDate = Object.values(Object.values(nDB).reduce((a, b) => {
+        if (b.localeDate !== 'Invalid Date' && b.localeDate !== 'январь 1970 г.') {
+            let oldState
+            switch (actionName) {
+                case 'setAllProducts':
+                    oldState = a[b.localeDate] || { factory_id_1: 0, factory_id_2: 0, date: b.localeDate }
+                    oldState.factory_id_1 += b.factory_1.product_1 + b.factory_1.product_2 + b.factory_1.product_3
+                    oldState.factory_id_2 += b.factory_2.product_1 + b.factory_2.product_2 + b.factory_2.product_3
+                    break
+                case 'setProduct_1':
+                    oldState = a[b.localeDate] || { factory_id_1: 0, factory_id_2: 0, date: b.localeDate }
+                    oldState.factory_id_1 += b.factory_1.product_1
+                    oldState.factory_id_2 += b.factory_2.product_1
+                    break
+                case 'setProduct_2':
+                    oldState = a[b.localeDate] || { factory_id_1: 0, factory_id_2: 0, date: b.localeDate }
+                    oldState.factory_id_1 += b.factory_1.product_2
+                    oldState.factory_id_2 += b.factory_2.product_2
+                    break
+                case 'setProduct_3':
+                    oldState = a[b.localeDate] || { factory_id_1: 0, factory_id_2: 0, date: b.localeDate }
+                    oldState.factory_id_1 += b.factory_1.product_3
+                    oldState.factory_id_2 += b.factory_2.product_3
+                    break
+            }
+            // console.log('a = %o\nb = %o\nc = %o', a, b, c)
+            a[b.localeDate] = oldState
+        }
+
+        return a
+    }, {}))
+    console.log('resultDate = ', resultDate)
+    return resultDate
 }

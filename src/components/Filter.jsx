@@ -1,10 +1,9 @@
 import { lazy, memo, useEffect, useState } from 'react'
 import { Select, Space } from 'antd'
-import LocaleProvider from 'antd/es/locale'
 
 const Filter = memo(({ dispatch, activeValue }) => {
 
-  // const [filterValueActive, setFilterValue] = useState(localStorage.getItem("filterValue") || 'setAllFactory')
+  // const [filterValueActive, setFilterValue] = useState(localStorage.getItem("filterValue") || 'setAllProducts')
 
   const handleChange = filterValue => {
     localStorage.setItem("filterValue", filterValue)
@@ -13,19 +12,22 @@ const Filter = memo(({ dispatch, activeValue }) => {
   }
 
   return (
-    <Space wrap direction="horizontal" style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+    <Space wrap direction="horizontal" style={{
+      width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '8px',
+      border: '1px solid #777', borderRadius: '8px'
+    }}>
       {/* <h4>{activeValue}</h4> */}
-      <label>
-        Агрегация данных:
+      <label style={{padding:'4px'}}>
+        Фильтр по типу продукции :
         <Select
           defaultValue={activeValue}
-          style={{ width: 180, marginLeft: 'auto' }}
+          style={{ width: 180, margin: '0 0 0 20px ', }}
           onChange={handleChange}
           options={[
-            { value: 'setAllFactory', label: 'Все производства' },
-            { value: 'setFactory_1', label: 'Производство 1' },
-            { value: 'setFactory_2', label: 'Производство 2' },
-            { value: 'setFactory_3', label: 'Производство 3' },
+            { value: 'setAllProducts', label: 'Все продукты' },
+            { value: 'setProduct_1', label: 'Продукт 1' },
+            { value: 'setProduct_2', label: 'Продукт 2' },
+            { value: 'setProduct_3', label: 'Продукт 3' },
           ]}
         />
       </label>
