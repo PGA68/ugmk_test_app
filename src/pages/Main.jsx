@@ -1,21 +1,17 @@
 // 
-
 import './Main.css'
 import { Spin } from 'antd';
 import Filter from '@cmp/Filter'
-import { useState, useEffect, Suspense, useReducer } from 'react'
+import { useEffect, Suspense, useReducer } from 'react'
 import { useEffectOnce } from '@lib/useEffectOnce'
-import { mockData1, mockData2, normalizeDB } from '@lib/fetchApi'
+import { mockData2, normalizeDB } from '@lib/fetchApi'
 import { reducer } from '@lib/reducer'
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 function Main() {
-  const [dataChart0, setDataChart0] = useState(mockData1)
-  // const [dataChart, setDataChart] = useState(mockData2)
+
   const metaEnv = import.meta.env
   const currentMode = metaEnv.MODE
-
   const [state, dispatch] = useReducer(reducer, { dataChart: mockData2, currentOption: localStorage.getItem("filterValue") || 'setAllProducts' })
 
   useEffectOnce(() => {
@@ -46,10 +42,10 @@ function Main() {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
-              <YAxis  />
+              <YAxis unit=' Тн' width={70} tickCount={10} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="factory_id_1" fill="#fc0000" name="Производство 1"  />
+              <Bar dataKey="factory_id_1" fill="#fc0000" name="Производство 1" />
               <Bar dataKey="factory_id_2" fill="#0000fe" name="Производство 2" />
             </BarChart>
           </Suspense>

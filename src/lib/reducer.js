@@ -53,7 +53,7 @@ export const reducer = (state, action) => {
 
 const rechartData = (actionName, nDB) => {
 
-    const resultDate = Object.values(Object.values(nDB).reduce((a, b) => {
+    const resultData = Object.values(Object.values(nDB).reduce((a, b) => {
         if (b.localeDate !== 'Invalid Date' && b.localeDate !== 'январь 1970 г.') {
             let oldState
             switch (actionName) {
@@ -77,13 +77,17 @@ const rechartData = (actionName, nDB) => {
                     oldState.factory_id_1 += b.factory_1.product_3
                     oldState.factory_id_2 += b.factory_2.product_3
                     break
+                default :
+                    console.log('Default Switch case')
             }
             // console.log('a = %o\nb = %o\nc = %o', a, b, c)
+            oldState.factory_id_1 = parseFloat((oldState.factory_id_1/1000).toFixed(6))
+            oldState.factory_id_2 = parseFloat((oldState.factory_id_2/1000).toFixed(6))
             a[b.localeDate] = oldState
         }
 
         return a
     }, {}))
-    console.log('resultDate = ', resultDate)
-    return resultDate
+    console.log('resultData = ', resultData)
+    return resultData
 }
