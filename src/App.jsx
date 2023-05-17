@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import Main from './pages/Main.jsx'
 import Pie from './pages/Pie.jsx'
@@ -15,13 +15,14 @@ import {
 const schemrouter = createBrowserRouter([{
   path: "/",
   element: <Main />,
-  // loader: async (nope2) => { console.log("nope2 = ", nope2); return nope2 },
+  id: 'root',
+  loader: async nope2 => { console.log("nope2 = ", nope2); return nope2 },
 }, {
   path: "/detail/:FactoryID?/:MonthNumber?",
   element: <Pie />,
   loader: async ({ params: a }) => {
-    console.log(a);
-    return a
+    console.log('LOADER SEND ', a);
+    return {a, 'gggg':678}
   }
 }])
 
