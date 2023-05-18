@@ -2,19 +2,19 @@
 import './Main.css'
 import { Spin } from 'antd';
 import Filter from '@cmp/Filter'
-import { useEffect, Suspense, useReducer } from 'react'
-import { useNavigate } from "react-router-dom"
+import { useEffect, Suspense } from 'react'
+import { useNavigate, useLoaderData } from 'react-router-dom'
 import { useEffectOnce } from '@lib/useEffectOnce'
-import { mockData2, normalizeDB } from '@lib/fetchApi'
-import { reducer } from '@lib/reducer'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 function Main() {
 
+  const album = useLoaderData();
+  const { dispatch, globalState } = album
   const metaEnv = import.meta.env
   const currentMode = metaEnv.MODE
   const navigate = useNavigate()
-  const [state, dispatch] = useReducer(reducer, { dataChart: mockData2, currentOption: localStorage.getItem("filterValue") || 'setAllProducts' })
+
   const clickOnGride = (evt) => {
     console.log('Gride = ', evt)
   }
@@ -29,24 +29,22 @@ function Main() {
   }
 
   useEffectOnce(() => {
-    normalizeDB().then(result => dispatch({ type: 'setNDB', nDB: result }))//setDataChart(result))
+    console.log('globalState = ', globalState)
     // console.log('import.meta.env = ', metaEnv)
-    console.log('MY EFFECTONCE IS RUNNING')
+    console.log('MY EFFECTONCE IS RUNNING = ', album)
     return () => console.log('MY EFFECTONCE IS DESTROYING')
   }, [])
 
   return (
     <>
-      <Filter {...{ dispatch }} activeValue={state.currentOption} />
-
+      <Filter {...{ dispatch }} activeValue={globalState.currentOption} />
       <div className="card" style={{ width: '800px', height: '700px' }}>
-
         <ResponsiveContainer width="100%" height="100%">
           <Suspense fallback={<Spin />}>
             <BarChart
               width={800}
               height={500}
-              data={state.dataChart}
+              data={globalState.dataChart}
               onClick={clickOnBare}
               margin={{
                 top: 5,
@@ -65,13 +63,10 @@ function Main() {
             </BarChart>
           </Suspense>
         </ResponsiveContainer>
-
       </div>
-
       <p>
         Mode is {currentMode}
       </p>
-
     </>
   )
 }

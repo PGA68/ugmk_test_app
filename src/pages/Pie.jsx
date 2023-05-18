@@ -4,10 +4,9 @@ import { PieChart, Pie as Pi, Sector, Cell, ResponsiveContainer } from 'recharts
 
 
 function Pie() {
-  // const [count, setCount] = useState(0)
   console.log(import.meta.env)
   const user = useRouteLoaderData("root");
-  const albome = useLoaderData();
+  const album = useLoaderData();
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
   const RADIAN = Math.PI / 180;
   const data = [
@@ -28,21 +27,21 @@ function Pie() {
     );
   };
 
-  console.log('USER = %o/nALBOME = %o', user, albome)
+  console.log('USER = %o/nalbum = %o', user, album)
 
   return (
     <>
       <h1>Pie Chart</h1>
-      <div className="card" style={{ width: '800px', height: '700px' }}>
+      <div className="card" style={{ width: '800px', height: '800px' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={400} height={400}>
+          <PieChart width={800} height={800}>
             <Pi
               data={data}
               cx="50%"
               cy="50%"
               labelLine={false}
               label={renderCustomizedLabel}
-              outerRadius={80}
+              outerRadius={180}
               fill="#8884d8"
               dataKey="value"
             >

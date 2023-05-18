@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
+import { normalizeDB } from '@lib/fetchApi'
+import { useEffectOnce } from '@lib/useEffectOnce'
+import { reducer } from '@lib/reducer'
 import Main from './pages/Main.jsx'
 import Pie from './pages/Pie.jsx'
 import { Spin } from 'antd'
@@ -9,29 +12,46 @@ import {
   RouterProvider,
 } from "react-router-dom"
 
-// import Root, { rootLoader } from "./routes/root";
-// import Team, { teamLoader } from "./routes/team"
+function App() {
 
-const schemrouter = createBrowserRouter([{
-  path: "/",
-  element: <Main />,
-  id: 'root',
-  loader: async nope2 => { console.log("nope2 = ", nope2); return nope2 },
-}, {
-  path: "/detail/:FactoryID?/:MonthNumber?",
-  element: <Pie />,
-  loader: async ({ params: a }) => {
-    console.log('LOADER SEND ', a);
-    return {a, 'gggg':678}
-  }
-}])
+  const [globalState, dispatch] = useReducer(reducer, {
+    dataChart: {},
+    normalizeDB: {},
+    currentOption: localStorage.getItem("filterValue") || 'setAllProducts'
+  })
 
+  useEffectOnce(
+    () => {
+      let ignore = false
+      normalizeDB().then(result => {
+        !ignore && dispatch({ type: 'setNDB', nDB: result })
+      })
+      return () => ignore = true
+    }, []
+  )
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <p className="read-the-docs">
-      Error top messages
-    </p>
-    <RouterProvider router={schemrouter} />
-  </React.StrictMode>
-)
+  const schemrouter = createBrowserRouter([{
+    path: "/",
+    element: <Main />,
+    id: 'root',
+    loader: async props => { console.log("props = ", props); return { props, dispatch, globalState } },
+  }, {
+    path: "/detail/:FactoryID?/:MonthNumber?",
+    element: <Pie />,
+    loader: async ({ params: a }) => {
+      console.log('LOADER SEND = ', a);
+      return { a, dispatch, globalState }
+    }
+  }])
+
+  return (
+    <React.StrictMode>
+      <p className="read-the-docs">
+        Error top messages
+      </p>
+      <RouterProvider router={schemrouter} />
+    </React.StrictMode>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)

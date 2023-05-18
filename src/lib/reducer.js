@@ -1,51 +1,51 @@
 //
 
-export const reducer = (state, action) => {
-    console.log('Reducer --->\nstate = %o\naction = %o', state, action)
+export const reducer = (globalState, action) => {
+    console.log('Reducer --->\nglobalState = %o\naction = %o', globalState, action)
     return ({
         'setAllProducts': () => {
             console.log(action)
-            console.log(state)
+            console.log(globalState)
             return {
-                ...state,
+                ...globalState,
                 currentOption: action.type,
-                dataChart: rechartData(action.type, state.normalizeDB)
+                dataChart: rechartData(action.type, globalState.normalizeDB)
             }
         },
         'setProduct_1': () => {
             console.log(action)
-            console.log(state)
+            console.log(globalState)
             return {
-                ...state,
+                ...globalState,
                 currentOption: action.type,
-                dataChart: rechartData(action.type, state.normalizeDB)
+                dataChart: rechartData(action.type, globalState.normalizeDB)
             }
         },
         'setProduct_2': () => {
             console.log(action)
-            console.log(state)
+            console.log(globalState)
             return {
-                ...state,
+                ...globalState,
                 currentOption: action.type,
-                dataChart: rechartData(action.type, state.normalizeDB)
+                dataChart: rechartData(action.type, globalState.normalizeDB)
             }
         },
         'setProduct_3': () => {
             console.log(action)
-            console.log(state)
+            console.log(globalState)
             return {
-                ...state,
+                ...globalState,
                 currentOption: action.type,
-                dataChart: rechartData(action.type, state.normalizeDB)
+                dataChart: rechartData(action.type, globalState.normalizeDB)
             }
         },
         'setNDB': () => {
             console.log(action)
-            console.log(state)
+            console.log(globalState)
             return {
-                ...state,
+                ...globalState,
                 normalizeDB: action.nDB,
-                dataChart: rechartData(state.currentOption, action.nDB)
+                dataChart: rechartData(globalState.currentOption, action.nDB)
             }
         }
     })[action.type]()
