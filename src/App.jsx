@@ -16,6 +16,7 @@ function App() {
 
   const [globalState, dispatch] = useReducer(reducer, {
     dataChart: {},
+    pieChart: [],
     normalizeDB: {},
     currentOption: localStorage.getItem("filterValue") || 'setAllProducts'
   })
@@ -30,19 +31,22 @@ function App() {
     }, []
   )
 
-  const schemrouter = createBrowserRouter([{
-    path: "/",
-    element: <Main />,
-    id: 'root',
-    loader: async props => { console.log("props = ", props); return { props, dispatch, globalState } },
-  }, {
-    path: "/detail/:FactoryID?/:MonthNumber?",
-    element: <Pie />,
-    loader: async ({ params: a }) => {
-      console.log('LOADER SEND = ', a);
-      return { a, dispatch, globalState }
+  const schemrouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main />,
+      id: 'root',
+      loader: async props => { console.log("props = ", props); return { props, dispatch, globalState } },
+    }, {
+      path: "/detail/:FactoryID/:MonthNumber",
+      element: <Pie />,
+      loader: async props => {
+        console.log('LOADER PIE SEND = ', props);
+        return {props, dispatch, globalState}
+        errorElement: <>ERROR</>
+      }
     }
-  }])
+  ])
 
   return (
     <React.StrictMode>

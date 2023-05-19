@@ -15,15 +15,9 @@ function Main() {
   const currentMode = metaEnv.MODE
   const navigate = useNavigate()
 
-  const clickOnGride = (evt) => {
-    console.log('Gride = ', evt)
-  }
-  const clickOnBare = (evt) => {
-    console.log('Bare = ', evt)
-  }
   const clickOnFactory = (evt) => {
     const factory_id = evt.tooltipPayload[0].dataKey.slice(-1)
-    const month = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'].indexOf(evt.date.slice(0, 3))
+    const month = 1 + ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'].indexOf(evt.date.slice(0, 3))
     // console.log('Factory = %o\nURI = %s', evt, `/detail/${factory_id}/${month}`)
     navigate(`/detail/${factory_id}/${month}`)
   }
@@ -45,7 +39,6 @@ function Main() {
               width={800}
               height={500}
               data={globalState.dataChart}
-              onClick={clickOnBare}
               margin={{
                 top: 5,
                 right: 30,
@@ -53,13 +46,13 @@ function Main() {
                 bottom: 5,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" onClick={clickOnGride} />
+              <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis unit=' т' width={70} tickCount={10} />
               <Tooltip />
-              <Legend />
-              <Bar style={{ cursor: 'pointer' }} dataKey="factory_id_1" onClick={clickOnFactory} fill="#fc0000" name="Производство 1" />
-              <Bar style={{ cursor: 'pointer' }} dataKey="factory_id_2" onClick={clickOnFactory} fill="#0000fe" name="Производство 2" />
+              <Legend  style={{'margin':'50px', 'padding':'20px'}}/>
+              <Bar style={{ cursor: 'pointer' }} dataKey="factory_id_1" onClick={clickOnFactory} fill="#fc0000" name="Фабрика 1" />
+              <Bar style={{ cursor: 'pointer' }} dataKey="factory_id_2" onClick={clickOnFactory} fill="#0000fe" name="Фабрика 2" />
             </BarChart>
           </Suspense>
         </ResponsiveContainer>
