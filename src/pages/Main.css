@@ -1,15 +1,28 @@
 #root {
+  width: 75%;
   max-width: 1280px;
+  min-width: 300px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   color: black
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+}
+
+.respBarCont {
+  min-width: 800px;
+  padding: 15px 15px 45px;
+  margin: 25px 0 0;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.barBox {
+  margin: 10px 0;
+  padding: 20px 0;
 }

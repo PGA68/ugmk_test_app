@@ -1,11 +1,7 @@
 //
-
 export const reducer = (globalState, action) => {
-    console.log('Reducer --->\nglobalState = %o\naction = %o', globalState, action)
     return ({
         'setAllProducts': () => {
-            console.log(action)
-            console.log(globalState)
             return {
                 ...globalState,
                 currentOption: action.type,
@@ -13,8 +9,6 @@ export const reducer = (globalState, action) => {
             }
         },
         'setProduct_1': () => {
-            console.log(action)
-            console.log(globalState)
             return {
                 ...globalState,
                 currentOption: action.type,
@@ -22,8 +16,6 @@ export const reducer = (globalState, action) => {
             }
         },
         'setProduct_2': () => {
-            console.log(action)
-            console.log(globalState)
             return {
                 ...globalState,
                 currentOption: action.type,
@@ -31,8 +23,6 @@ export const reducer = (globalState, action) => {
             }
         },
         'setProduct_3': () => {
-            console.log(action)
-            console.log(globalState)
             return {
                 ...globalState,
                 currentOption: action.type,
@@ -40,8 +30,6 @@ export const reducer = (globalState, action) => {
             }
         },
         'setNDB': () => {
-            console.log(action)
-            console.log(globalState)
             return {
                 ...globalState,
                 normalizeDB: action.nDB,
@@ -52,7 +40,6 @@ export const reducer = (globalState, action) => {
 }
 
 const rechartData = (actionName, nDB) => {
-
     const resultData = Object.values(Object.values(nDB).reduce((a, b) => {
         if (b.localeDate !== 'Invalid Date' && b.localeDate !== 'январь 1970 г.') {
             let oldState
@@ -80,14 +67,11 @@ const rechartData = (actionName, nDB) => {
                 default:
                     console.log('Default Switch case')
             }
-            // console.log('a = %o\nb = %o\nc = %o', a, b, c)
             oldState.factory_id_1 = parseFloat((oldState.factory_id_1 / 1000).toFixed(6))
             oldState.factory_id_2 = parseFloat((oldState.factory_id_2 / 1000).toFixed(6))
             a[b.localeDate] = oldState
         }
-
         return a
     }, {}))
-    console.log('resultData = ', resultData)
     return resultData
 }

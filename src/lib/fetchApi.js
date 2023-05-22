@@ -18,7 +18,6 @@ export async function normalizeDB() {
 
     return await fetchAPI(import.meta.env.VITE_API_HOST, { headers: { "Content-Type": "application/json", "cache": "force-cache" } })
         .then(({ status, statusText, jsonData }) => {
-            console.log('Status = %s \tStatusText = %s \nJsonData = %o', status, statusText, jsonData)
             acc = jsonData.reduce(
                 (a, b) => {
 
@@ -42,11 +41,9 @@ export async function normalizeDB() {
                     if (b.product1) a[hashDate][factory].product_1 += b.product1
                     if (b.product2) a[hashDate][factory].product_2 += b.product2
                     if (b.product3) a[hashDate][factory].product_3 += b.product3
-                    // console.log('a = %o\nb = %o', a, b)
                     return a
                 }, {},
             )
-            console.log('acc intu = ', acc)
             return acc
         })
 }

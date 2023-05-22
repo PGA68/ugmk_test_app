@@ -1,27 +1,23 @@
-import { lazy, memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import { Select, Space } from 'antd'
 
 const Filter = memo(({ dispatch, activeValue }) => {
 
-  // const [filterValueActive, setFilterValue] = useState(localStorage.getItem("filterValue") || 'setAllProducts')
-
   const handleChange = filterValue => {
     localStorage.setItem("filterValue", filterValue)
-    // setFilterValue(filterValue)
     dispatch({ type: filterValue })
   }
 
   return (
     <Space wrap direction="horizontal" style={{
-      width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '8px',
-      border: '1px solid #777', borderRadius: '8px'
+      width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '8px 8px',
+      border: '1px solid #aaa', borderRadius: '8px', boxSizing: 'border-box'
     }}>
-      {/* <h4>{activeValue}</h4> */}
       <label style={{padding:'4px'}}>
         Фильтр по типу продукции :
         <Select
           defaultValue={activeValue}
-          style={{ width: 180, margin: '0 0 0 20px ', }}
+          style={{ width: 180, margin: '0 0 0 20px' }}
           onChange={handleChange}
           options={[
             { value: 'setAllProducts', label: 'Все продукты' },

@@ -1,11 +1,9 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { normalizeDB } from '@lib/fetchApi'
-import { useEffectOnce } from '@lib/useEffectOnce'
 import { reducer } from '@lib/reducer'
 import Main from './pages/Main.jsx'
 import Pie from './pages/Pie.jsx'
-import { Spin } from 'antd'
 import './index.css'
 import {
   createBrowserRouter,
@@ -21,7 +19,7 @@ function App() {
     currentOption: localStorage.getItem("filterValue") || 'setAllProducts'
   })
 
-  useEffectOnce(
+  useEffect(
     () => {
       let ignore = false
       normalizeDB().then(result => {
@@ -35,24 +33,20 @@ function App() {
     {
       path: "/",
       element: <Main />,
+      errorElement: <>ERROR ROOT PAGE</>,
       id: 'root',
-      loader: async props => { console.log("props = ", props); return { props, dispatch, globalState } },
+      loader: async props => { return { props, dispatch, globalState } }
     }, {
       path: "/detail/:FactoryID/:MonthNumber",
       element: <Pie />,
-      loader: async props => {
-        console.log('LOADER PIE SEND = ', props);
-        return {props, dispatch, globalState}
-        errorElement: <>ERROR</>
-      }
+      errorElement: <>ERROR PIE PAGE</>,
+      loader: async props => { return { props, dispatch, globalState } }
     }
   ])
 
   return (
     <React.StrictMode>
-      <p className="read-the-docs">
-        Error top messages
-      </p>
+      <p className="read-the-docs"></p>
       <RouterProvider router={schemrouter} />
     </React.StrictMode>
   )
