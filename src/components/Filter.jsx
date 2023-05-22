@@ -13,7 +13,7 @@ const Filter = memo(({ dispatch, activeValue }) => {
       width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '8px 8px',
       border: '1px solid #aaa', borderRadius: '8px', boxSizing: 'border-box'
     }}>
-      <label style={{padding:'4px'}}>
+      <label style={{ padding: '4px' }}>
         Фильтр по типу продукции :
         <Select
           defaultValue={activeValue}
@@ -29,9 +29,7 @@ const Filter = memo(({ dispatch, activeValue }) => {
       </label>
     </Space>
   )
-}, (a, b) => {
-  console.log('a = %o\nb = %o', a, b)
-  return true
-})
+}, () => true
+)
 
 export default Filter
