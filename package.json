@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"npm run json-db\" \"vite\"",
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "concurrently \"npm run json-db\" \"vite\"",
+    "start": "vite",
+    "build": "vite build -- 'index.html'",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "concurrently \"npm run json-db\" \"vite preview\"",
     "json-db": "json-server --watch public/products.json --port 3001",
-    "dockerize": "npm test nope",
-    "start-container": "npm test nope"
+    "dockerize": "docker build . -f ./Dockerfile --rm --build-arg NODE_ENV=production -t ugmk_test_app",
+    "start-container": "docker run --rm --name ugmk_test_app -p 3000:3000/tcp ugmk_test_app"
   },
   "dependencies": {
     "antd": "^5.5.0",
@@ -21,8 +21,6 @@
     "recharts": "^2.6.2"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.0.1",
     "eslint": "^8.41.0",

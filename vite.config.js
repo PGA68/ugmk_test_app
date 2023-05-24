@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import path from 'path'
+import path, { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 import { visualizer } from "rollup-plugin-visualizer";
 
@@ -26,4 +26,11 @@ export default defineConfig({
   preview: {
     port: 3000,
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html')
+      },
+    },
+  }
 })

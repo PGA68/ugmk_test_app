@@ -16,4 +16,4 @@
 * Dispatch without Redux
 * Thinkfull and fast Reducer
 * Responsive design
-* Lihte functional components on Hooks
+* Light functional components on Hooks
