@@ -8,9 +8,10 @@ function Main() {
   const album = useLoaderData();
   const { dispatch, globalState } = album
   const navigate = useNavigate()
+  const monthArrayShort = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
   const clickOnFactory = (evt) => {
     const factory_id = evt.tooltipPayload[0].dataKey.slice(-1)
-    const month = 1 + ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'].indexOf(evt.date.slice(0, 3))
+    const month = 1 + monthArrayShort.indexOf(evt.date.slice(0, 3))
     navigate(`/detail/${factory_id}/${month}`)
   }
 

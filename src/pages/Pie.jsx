@@ -8,6 +8,7 @@ function Pie() {
   const { globalState, props } = useLoaderData()
   const { FactoryID = 0, MonthNumber = 0 } = props?.params
   const { normalizeDB: nDB } = globalState
+  const monthArray = 'январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь'.split(' ')
 
   if (FactoryID > 2 || FactoryID == 0 || MonthNumber > 12 || MonthNumber == 0)
     return (<><h2>Params Error</h2></>)
@@ -28,7 +29,7 @@ function Pie() {
 
   const strTag = (strs, F, M) => {
     const nameFactory = ['0', 'А', 'Б'][F]
-    const month = 'январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь'.split(' ')[M-1]
+    const month = monthArray[M-1]
     return `${nameFactory}${strs[1]}${month}`
   }
 
